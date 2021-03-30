@@ -1,9 +1,18 @@
+require('dotenv').config()
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
-const ExpressError = require("./utils/ExpressError");
+const session = require("express-session");
+const ExpressError = require("./utils/expressError");
+const flash = require("connect-flash");
 const methodOverride = require("method-override");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user");
+
+
+
 const storyRoutes = require("./routes/story");
 const commentRoutes = require("./routes/comment");
 
@@ -38,26 +47,61 @@ app.use(methodOverride("_method"));
 
 app.use(express.static(path.join(__dirname, "public")));
 
+// options for session
+const sessionConfig = {
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        HttpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+    }
+}
+// setting up session 
+app.use(session(sessionConfig));
+
+// telling app to use flash.
+app.use(flash());
+
+
+// telling app to use passport and configuring it. 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+// middlewear for passing items globally.
+
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    next();
+})
+
 // story routes.
 app.use("/story", storyRoutes);
 // comment Routes
-app.use('/story/:id/comment', require("./routes/comment"));
+app.use('/story/:id/comment', commentRoutes);
 // index route.
 app.get("/", (req, res) => {
     res.render("home");
 });
 
 // for all the routes.
-// app.all("*", (req, res, next) => {
-//     next(new ExpressError("page not found", 404));
-// });
-// app.use((err, req, res, next) => {
-//     // const { statusCode = 500, message = "some thing went wrong" } = err;
-//     const { statusCode = 500 } = err;
-//     if (!err.message) err.message = "Oh no some thing went wrong!";
-//     res.status(statusCode).send({ err });
+app.all("*", (req, res, next) => {
+    next(new ExpressError("page not found", 404));
+});
 
-// });
+//error middleware
+app.use((err, req, res, next) => {
+    const { statusCode = 500 } = err;
+    console.log(err.message);
+    if (!err.message) err.message = "Oh no some thing went wrong!";
+    res.status(statusCode).render("error", { err });
+
+});
 
 app.listen(3000, () => {
     console.log("serving on post 3000");

@@ -33,6 +33,8 @@ router.put("/:commentId", validateComment, catchAsync(async (req, res) => {
         new: true,
     });
     await updatedComment.save();
+
+    req.flash("success", "Successfully updated comment");
     res.redirect(`/story/${id}`);
 }))
 
@@ -42,6 +44,8 @@ router.delete("/:commentId", catchAsync(async (req, res) => {
         $pull: { comments: commentId }
     })
     await Comment.findByIdAndDelete(commentId);
+
+    req.flash("success", "Successfully deleted Comment");
     res.redirect(`/story/${id}`)
 }))
 

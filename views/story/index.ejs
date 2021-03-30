@@ -1,0 +1,23 @@
+<% layout('layouts/boilerplate') -%>
+
+<div class="container min-vh-100">
+  <div class="row my-5">
+    <% results.forEach(result => { %>
+    <div class="col-lg-4 col-md-4 my-3">
+      <div class="card-group">
+        <div class="card">
+          <img src="<%=result.image%>" class="img-thumbnail" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title"><%=result.title %></h5>
+          </div>
+          <div class="card-footer">
+            <a href="/story/<%=result._id %>" class="btn btn-primary"
+              >Read More!</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+</div>

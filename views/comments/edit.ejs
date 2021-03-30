@@ -1,0 +1,38 @@
+<% layout('layouts/boilerplate.ejs') %>
+<div class="container min-vh-100">
+  <div class="col-6 offset-3 my-5">
+    <h2>Update Comment</h2>
+    <form
+      action="/story/<%=story._id%>/comment/<%=comment._id%>?_method=PUT"
+      method="POST"
+      class="mb-3 validated-form mt-5"
+      novalidate
+    >
+      <div class="mb-3">
+        <label class="form-label" for="rating">Author</label>
+        <input
+          class="form-range"
+          name="comment[author]"
+          id="author"
+          value="<%=comment.author %>"
+        />
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="body">Comment</label>
+        <textarea
+          class="form-control"
+          name="comment[comment]"
+          id="body"
+          cols="30"
+          rows="3"
+          required
+        >
+        <%=comment.comment%></textarea
+        >
+        <div class="valid-feedback">looks good</div>
+      </div>
+      <button class="btn btn-success">Submit</button>
+      <a class="btn btn-secondary" href="/story/<%=story._id%>">Cancell</a>
+    </form>
+  </div>
+</div>

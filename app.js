@@ -15,6 +15,7 @@ const User = require("./models/user");
 
 const storyRoutes = require("./routes/story");
 const commentRoutes = require("./routes/comment");
+const userRoutes = require("./models/user");
 
 
 // connecting to the database.
@@ -84,7 +85,10 @@ app.use((req, res, next) => {
 app.use("/story", storyRoutes);
 // comment Routes
 app.use('/story/:id/comment', commentRoutes);
-// index route.
+// user Routes
+
+app.use("/", userRoutes)
+// index Route.
 app.get("/", (req, res) => {
     res.render("home");
 });

@@ -2,9 +2,9 @@
 
 <div class="container min-vh-100">
   <div class="row">
-    <h4 class="my-5 text-center">Please Register new user</h4>
-    <div class="col-6 offset-3 p-5">
-      <form action="/register" method="POST" class="validated-form" novalidate>
+    <div class="col-6 offset-3">
+      <h4 class="my-5 text-center">Please Login to continue!</h4>
+      <form action="/login" method="POST" class="validated-form" novalidate>
         <div class="mb-3">
           <label for="username">Username</label>
           <input
@@ -13,19 +13,6 @@
             name="username"
             class="form-control"
             placeholder="Please enter new username"
-            value=""
-            required
-          />
-          <div class="valid-feedback">Looks Good!</div>
-        </div>
-        <div class="mb-3">
-          <label for="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            class="form-control"
-            placeholder="Please enter your email address"
             value=""
             required
           />
@@ -44,7 +31,7 @@
           />
           <div class="valid-feedback">Looks Good!</div>
         </div>
-        <button class="btn btn-primary w-100">Register</button>
+        <button class="btn btn-primary btn-lg btn-block w-100">Login</button>
       </form>
     </div>
   </div>

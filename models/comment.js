@@ -6,7 +6,8 @@ const commentSchema = new Schema({
         type: String,
     },
     author: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: "User",
     }
 
 });

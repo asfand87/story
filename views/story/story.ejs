@@ -11,9 +11,12 @@
           alt="A generic square placeholder image with rounded corners in a figure."
         />
         <figcaption class="figure-caption mb-3">
-          <%=story.description %>
+          <b>Posted By </b><%=story.author.username%>
         </figcaption>
+        <h6 class="my-2"><b>Description</b> <%=story.description%></h6>
         <p><b>Location</b> : <%=story.location%></p>
+        <!-- if current user is present and story.author === currentUser._id -->
+        <% if(currentUser && story.author.equals(currentUser._id)){ %>
         <div class="buttons d-flex justify-content-between">
           <div class="__formContent">
             <form
@@ -31,7 +34,9 @@
           </div>
         </div>
       </figure>
+      <% } %>
     </div>
+    <%if(currentUser){ %>
     <div class="col-6 my-5">
       <form
         action="/story/<%=story._id%>/comment"
@@ -39,23 +44,12 @@
         class="validated-form"
         novalidate
       >
-        <div class="my-4">
-          <label for="author">Author</label>
-          <input
-            type="text"
-            name="comment[author]"
-            class="form-control"
-            placeholder="Author"
-            id="author"
-            required
-          />
-        </div>
-        <div class="mb-3 mt-2">
+        <div class="mt-5">
           <label for="description">Comment</label>
           <textarea
             type="text"
             name="comment[comment]"
-            class="form-control my-3"
+            class="form-control mt-3"
             placeholder="Comment"
             id="comment"
             required
@@ -63,32 +57,33 @@
         </div>
         <button class="btn btn-primary btn-success">Comment</button>
       </form>
-      <div class="row">
-        <% for(let comment of story.comments){ %>
-        <div class="card my-5">
-          <div class="card-body">
-            <h6 class="card-subtitle mb-2 text-muted">
-              <!-- i set it to author.email but in course its review.author.username -->
-              By : <%=comment.author %>
-            </h6>
-            <p class="card-text">Review: <%=comment.comment %></p>
 
-            <form
-              class="d-inline"
-              method="POST"
-              action="/story/<%=story._id%>/comment/<%=comment._id%>?_method=DELETE"
-            >
-              <button class="btn btn-sm btn-danger">Delete</button>
-            </form>
-            <a
-              class="btn btn-sm btn-secondary"
-              href="/story/<%=story._id%>/comment/<%=comment._id%>/edit"
-              >Edit</a
-            >
-            <% } %>
-          </div>
+      <% } %> <% for(let comment of story.comments){ %>
+
+      <div class="card my-2">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">
+            <!-- i set it to author.email but in course its review.author.username -->
+            Commented By : <%=comment.author.username %>
+          </h6>
+          <p class="card-text">Review: <%=comment.comment %></p>
+          <% if(currentUser && comment.author.equals(currentUser._id)){ %>
+          <form
+            class="d-inline"
+            method="POST"
+            action="/story/<%=story._id%>/comment/<%=comment._id%>?_method=DELETE"
+          >
+            <button class="btn btn-sm btn-danger">Delete</button>
+          </form>
+          <a
+            class="btn btn-sm btn-secondary"
+            href="/story/<%=story._id%>/comment/<%=comment._id%>/edit"
+            >Edit</a
+          >
+          <% } %>
         </div>
       </div>
+      <% } %>
     </div>
   </div>
 </div>

@@ -11,6 +11,5 @@ module.exports.storySchema = Joi.object({
 module.exports.commentSchema = Joi.object({
     comment: Joi.object({
         comment: Joi.string().required(),
-        author: Joi.string().required(),
     }).required(),
 })

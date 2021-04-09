@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 const Story = require("../models/story")
-const { validateStory } = require("../middleware.js");
+const { validateStory, isLoggedIn, isAuthor } = require("../middleware.js");
 const catchAsync = require("../utils/catchAsync");
 
 
@@ -13,32 +13,39 @@ router.get("/", catchAsync(async (req, res) => {
 }));
 
 // to make new story show form.
-router.get("/new", catchAsync(async (req, res) => {
+router.get("/new", isLoggedIn, catchAsync(async (req, res) => {
     res.render("story/new")
 }))
 
 // show story by id
 router.get("/:id", catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    const story = await Story.findById(id).populate("comments");
+    const story = await Story.findById(id).populate({
+        path: "comments",
+        populate: {
+            path: "author",
+        }
+    }).populate("author");
     if (!story) {
         req.flash("error", "Cannot find this story!");
         return res.redirect("/story");
     }
-    // console.log(story);
+
     res.render("story/story", { story });
 }))
 
 // for creating new story
-router.post("/", validateStory, catchAsync(async (req, res, next) => {
+router.post("/", isLoggedIn, validateStory, catchAsync(async (req, res, next) => {
     const story = new Story(req.body.story);
+    story.author = req.user._id;
     await story.save();
+    console.log(story);
     req.flash("success", "Successfully made new story");
-    res.redirect("/story");
+    res.redirect(`/story/${story._id}`);
 }))
 
 // for updating story.
-router.get("/:id/edit", catchAsync(async (req, res, next) => {
+router.get("/:id/edit", isLoggedIn, isAuthor, catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const story = await Story.findById(id);
     if (!story) {
@@ -49,9 +56,9 @@ router.get("/:id/edit", catchAsync(async (req, res, next) => {
 }))
 
 // for updating one story by it;s Id
-router.put("/:id", validateStory, catchAsync(async (req, res, next) => {
+router.put("/:id", isLoggedIn, isAuthor, validateStory, catchAsync(async (req, res, next) => {
+
     const { id } = req.params;
-    const { story } = req.body;
     const updatedStory = await Story.findByIdAndUpdate(id, story);
     if (!updatedStory) {
         req.flash("error", "story not found!");
@@ -63,7 +70,7 @@ router.put("/:id", validateStory, catchAsync(async (req, res, next) => {
 
 // to delete story by it's id
 
-router.delete("/:id", catchAsync(async (req, res) => {
+router.delete("/:id", isLoggedIn, isAuthor, catchAsync(async (req, res) => {
     const { id } = req.params;
     const deleteItem = await Story.findByIdAndDelete(id);
     req.flash("success", "Successfully deleted Story");

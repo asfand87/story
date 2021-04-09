@@ -15,7 +15,7 @@ const User = require("./models/user");
 
 const storyRoutes = require("./routes/story");
 const commentRoutes = require("./routes/comment");
-const userRoutes = require("./models/user");
+const userRoutes = require("./routes/user");
 
 
 // connecting to the database.
@@ -76,6 +76,7 @@ passport.deserializeUser(User.deserializeUser());
 // middlewear for passing items globally.
 
 app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     next();
@@ -86,12 +87,15 @@ app.use("/story", storyRoutes);
 // comment Routes
 app.use('/story/:id/comment', commentRoutes);
 // user Routes
+app.use("/", userRoutes);
 
-app.use("/", userRoutes)
 // index Route.
 app.get("/", (req, res) => {
     res.render("home");
 });
+
+
+
 
 // for all the routes.
 app.all("*", (req, res, next) => {
@@ -101,10 +105,8 @@ app.all("*", (req, res, next) => {
 //error middleware
 app.use((err, req, res, next) => {
     const { statusCode = 500 } = err;
-    console.log(err.message);
     if (!err.message) err.message = "Oh no some thing went wrong!";
     res.status(statusCode).render("error", { err });
-
 });
 
 app.listen(3000, () => {

@@ -1,7 +1,7 @@
 const Story = require("../models/story")
 
 module.exports.index =
-    async (req, res) => {
+    async (req, res, next) => {
         const results = await Story.find({});
         results.sort();
         res.render("story/index", { results });
@@ -23,7 +23,7 @@ module.exports.showOneStory = async (req, res, next) => {
     res.render("story/story", { story });
 };
 
-module.exports.renderNewForm = async (req, res) => {
+module.exports.renderNewForm = async (req, res, next) => {
     res.render("story/new")
 }
 
@@ -58,7 +58,7 @@ module.exports.updateStory = async (req, res, next) => {
     res.redirect(`/story/${updatedStory._id}`)
 };
 
-module.exports.deleteStory = async (req, res) => {
+module.exports.deleteStory = async (req, res, next) => {
     const { id } = req.params;
     const deleteItem = await Story.findByIdAndDelete(id);
     req.flash("success", "Successfully deleted Story");

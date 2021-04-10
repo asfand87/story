@@ -12,14 +12,14 @@ module.exports.makeComment = async (req, res, next) => {
     res.redirect(`/story/${id}`);
 }
 
-module.exports.updateCommentForm = async (req, res) => {
+module.exports.updateCommentForm = async (req, res, next) => {
     const { id, commentId } = req.params;
     const story = await Story.findById(id);
     const comment = await Comment.findById(commentId);
     res.render("comments/edit", { story, comment });
 };
 
-module.exports.updateComment = async (req, res) => {
+module.exports.updateComment = async (req, res, next) => {
     const { id, commentId } = req.params;
     // console.log(id);
     const { comment } = req.body;
@@ -32,7 +32,7 @@ module.exports.updateComment = async (req, res) => {
     res.redirect(`/story/${id}`);
 };
 
-module.exports.deleteComment = async (req, res) => {
+module.exports.deleteComment = async (req, res, next) => {
     const { id, commentId } = req.params;
     await Story.findByIdAndUpdate(id, {
         $pull: { comments: commentId }

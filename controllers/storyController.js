@@ -1,5 +1,6 @@
-const Story = require("../models/story")
-
+const { UploadStream } = require("cloudinary");
+const Story = require("../models/story");
+const { cloudinary } = require("../cloudinary/index");
 module.exports.index =
     async (req, res, next) => {
         const results = await Story.find({});
@@ -28,7 +29,12 @@ module.exports.renderNewForm = async (req, res, next) => {
 }
 
 module.exports.createStory = async (req, res, next) => {
+    // req.files is an array from mutller
+
     const story = new Story(req.body.story);
+    // returning an array and inserting that in story.image
+    const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
+    story.images.push(...imgs);
     story.author = req.user._id;
     await story.save();
     // console.log(story);
@@ -49,7 +55,12 @@ module.exports.updateStoryForm = async (req, res, next) => {
 module.exports.updateStory = async (req, res, next) => {
     const { story } = req.body;
     const { id } = req.params;
+    // console.log(req.body);
     const updatedStory = await Story.findByIdAndUpdate(id, story);
+    const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
+    await updatedStory.images.push(...imgs);
+    await updatedStory.save();
+
     if (!updatedStory) {
         req.flash("error", "story not found!");
         return res.redirect("/story");

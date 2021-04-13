@@ -1,13 +1,14 @@
 <% layout('layouts/boilerplate') -%>
 
 <div class="container min-vh-100">
-  <h1 class="text-center mt-3">Edit Story</h1>
+  <h1 class="text-center mt-3">Edit <%=story.title%></h1>
   <div class="row my-5 gy-5">
     <div class="col-lg-6 offset-3 border">
       <form
         action="/story/<%=story._id %>?_method=PUT "
         method="POST"
         class="validated-form"
+        enctype="multipart/form-data"
         novalidate
       >
         <div class="mb-3">
@@ -22,19 +23,7 @@
           />
         </div>
         <div class="mb-3">
-          <label for="image">Image</label>
-          <input
-            type="text"
-            name="story[image]"
-            class="form-control"
-            placeholder="image"
-            id="image"
-            value="<%=story.image%>  "
-            required
-          />
-        </div>
-        <div class="mb-3">
-          <label for="location">Location</label>
+          <label class="form-label" for="location">Location</label>
           <input
             type="text"
             name="story[location]"
@@ -46,7 +35,7 @@
           />
         </div>
         <div class="mb-3">
-          <label for="description">Description</label>
+          <label class="form-label" for="description">Description</label>
           <textarea
             type="text"
             name="story[description]"
@@ -55,13 +44,23 @@
             id="description"
             required
           >
-<%=story.description %> </textarea
+          <%=story.description %> </textarea
           >
         </div>
+        <div class="mb-3">
+          <div class="image__label">
+            <label for="formFileMultiple" class="form-label">Add Images</label>
+          </div>
+          <input
+            type="file"
+            class="from-conotrol"
+            name="image"
+            id="image"
+            multiple
+          />
+        </div>
         <button class="btn btn-primary btn-success">Submit</button>
-        <button type="submit" class="btn btn-secondary" href="/">
-          Cancell
-        </button>
+        <a class="btn btn-secondary" href="/story"> Cancell </a>
       </form>
     </div>
   </div>

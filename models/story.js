@@ -4,7 +4,12 @@ const Schema = mongoose.Schema;
 const Comment = require("../models/comment");
 const storySchema = new Schema({
     title: String,
-    image: String,
+    images: [
+        {
+            url: String,
+            filename: String,
+        }
+    ],
     description: String,
     location: String,
     author: {
@@ -21,10 +26,10 @@ const storySchema = new Schema({
 });
 
 storySchema.pre("findOneAndDelete", async function (doc) {
-    // if some thing was found. in our case we are looking for reviews.
+    // if some thing was found. in our case we are looking for Comments.
     if (doc) {
         await Comment.deleteMany({
-            // so here we are saying that look in Review and remove where id is some where
+            // so here we are saying that look in Comment and remove where id is some where
             _id: {
                 $in: doc.comments,
             },

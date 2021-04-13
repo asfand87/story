@@ -4,7 +4,13 @@
   <h1 class="text-center mt-5">Add Story</h1>
   <div class="row my-5 gy-5">
     <div class="col-6 offset-3">
-      <form action="/story" method="POST" class="validated-form" novalidate>
+      <form
+        action="/story"
+        method="POST"
+        class="validated-form"
+        novalidate
+        enctype="multipart/form-data"
+      >
         <div class="my-3">
           <label for="name">Title</label>
 
@@ -17,17 +23,6 @@
           />
         </div>
 
-        <div class="my-3">
-          <label for="image">image</label>
-          <input
-            type="text"
-            name="story[image]"
-            class="form-control"
-            placeholder="image"
-            id="image"
-            required
-          />
-        </div>
         <div class="my-3">
           <label for="location">Location</label>
           <input
@@ -50,7 +45,25 @@
             required
           ></textarea>
         </div>
-        <button class="btn btn-primary btn-success">Submit</button>
+
+        <!-- workign on displayed names for files. -->
+
+        <div class="mb-3">
+          <div class="image__label">
+            <label for="formFileMultiple" class="form-label"
+              >Add Images- Max 3 Images</label
+            >
+          </div>
+          <input
+            type="file"
+            class="from-conotrol"
+            name="image"
+            id="image"
+            multiple
+          />
+        </div>
+        <button class="btn btn-primary btn-success">Add Story</button>
+        <a href="/story" class="btn btn-primary btn-success">Cancell</a>
       </form>
     </div>
   </div>

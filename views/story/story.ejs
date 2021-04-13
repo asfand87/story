@@ -2,14 +2,32 @@
 
 <div class="container min-vh-100">
   <div class="row my-5">
-    <div class="col-6 my-5">
+    <div class="col-lg-6 my-5">
       <figure class="figure">
         <h5><b>Title</b> : <%=story.title%></h5>
-        <img
-          src="<%=story.image  %>"
-          class="img-fluid mw-100 mt-3"
-          alt="A generic square placeholder image with rounded corners in a figure."
-        />
+        <!-- carusel -->
+        <div
+          id="carouselExampleSlidesOnly"
+          class="carousel slide"
+          data-bs-ride="carousel"
+        >
+          <div class="carousel-inner">
+            <% story.images.forEach((image, index) => { %>
+            <div
+              id="carousel__img"
+              class="carousel-item <%=index===0?'active':'' %>"
+            >
+              <img
+                src="<%=image.url %> "
+                class="d-block w-100 h-100"
+                alt="..."
+              />
+            </div>
+            <% }) %>
+          </div>
+        </div>
+        <!-- end of -->
+
         <figcaption class="figure-caption mb-3">
           <b>Posted By </b><%=story.author.username%>
         </figcaption>
@@ -37,7 +55,7 @@
       <% } %>
     </div>
     <%if(currentUser){ %>
-    <div class="col-6 my-5">
+    <div class="col-lg-6 my-5">
       <form
         action="/story/<%=story._id%>/comment"
         method="POST"
@@ -63,7 +81,6 @@
       <div class="card my-2">
         <div class="card-body">
           <h6 class="card-subtitle mb-2 text-muted">
-            <!-- i set it to author.email but in course its review.author.username -->
             Commented By : <%=comment.author.username %>
           </h6>
           <p class="card-text">Review: <%=comment.comment %></p>

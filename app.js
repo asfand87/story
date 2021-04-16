@@ -112,7 +112,7 @@ app.use("/", userRoutes);
 
 // index Route.
 app.get("/", (req, res) => {
-    res.render('home');
+    res.redirect('/story');
 });
 
 

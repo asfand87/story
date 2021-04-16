@@ -1,6 +1,6 @@
 <nav class="navbar stickry-top navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/">Story</a>
+    <a class="navbar-brand" href="/">Home</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -14,9 +14,12 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link" href="/">Home</a>
-        <a class="nav-link" href="/story">Stories</a>
         <a class="nav-link" href="/story/new">New Story</a>
+        <form action="/story" method="GET" class="d-flex">
+          <input class="form-control" name="search" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-secondary bg-dark mx-1" type="submit">Search</button>
+        </form>
+      </div>
       </div>
       <div class="navbar-nav ms-auto">
         <% if(!currentUser){ %>

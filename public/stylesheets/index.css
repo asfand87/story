@@ -6,20 +6,8 @@
   padding-left: 0.5rem;
 }
 
-/* #carousel__img {
-  object-fit: scale-down;
-  height: 30rem;
-} */
-
-.home__index {
-  display: flex;
-  flex-direction: column;
-}
-#home__page {
-  justify-content: center;
-  align-items: center;
-}
-.search__button {
-  margin-top: 10rem;
-  justify-content: center;
+.carousel-control-prev,
+.carousel-control-next {
+  background: transparent;
+  border: none;
 }

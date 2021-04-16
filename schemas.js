@@ -12,3 +12,9 @@ module.exports.commentSchema = Joi.object({
         comment: Joi.string().required(),
     }).required(),
 })
+module.exports.paswwordSchema = Joi.object({
+    username: Joi.string().alphanum().min(3).required(),
+    email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).min(6).required(),
+    password: Joi.string().min(6).pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
+})
+

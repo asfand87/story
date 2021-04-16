@@ -3,9 +3,25 @@ const Story = require("../models/story");
 const { cloudinary } = require("../cloudinary/index");
 module.exports.index =
     async (req, res, next) => {
-        const results = await Story.find({});
-        results.sort();
-        res.render("story/index", { results });
+        if (!req.query.search) {
+            const results = await Story.find({});
+            results.sort();
+            res.render("story/index", { results });
+        } else {
+            const search = req.query.search;
+            // let firstLetter = search.slice(0, 1).toUpperCase();
+            // let restOftheWord = search.slice(1);
+            // let word = firstLetter + restOftheWord;
+            // console.log(word);
+            const results = await Story.find({ location: search });
+            if (results.length < 1) {
+                req.flash("error", "No stories found!");
+                return res.redirect("/story");
+            }
+            results.sort();
+            res.render("story/index", { results });
+        }
+
     }
 
 module.exports.showOneStory = async (req, res, next) => {

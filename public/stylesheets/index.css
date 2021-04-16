@@ -11,3 +11,8 @@
   background: transparent;
   border: none;
 }
+
+.carousel__image {
+  height: 20rem;
+  object-fit: fill;
+}

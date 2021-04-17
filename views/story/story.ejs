@@ -52,7 +52,8 @@
         <h6 class="my-2"><b>Description</b> <%=story.description%></h6>
         <p><b>Location</b> : <%=story.location%></p>
         <!-- if current user is present and story.author === currentUser._id -->
-        <% if(currentUser && story.author.equals(currentUser._id)){ %>
+        <% if(currentUser && story.author.equals(currentUser._id) || currentUser
+        && currentUser.isAdmin){ %>
         <div class="buttons d-flex justify-content-between">
           <div class="__formContent">
             <form
@@ -102,7 +103,8 @@
             Commented By : <%=comment.author.username %>
           </h6>
           <p class="card-text">Review: <%=comment.comment %></p>
-          <% if(currentUser && comment.author.equals(currentUser._id)){ %>
+          <% if(currentUser && comment.author.equals(currentUser._id) ||
+          currentUser && currentUser.isAdmin){ %>
           <form
             class="d-inline"
             method="POST"

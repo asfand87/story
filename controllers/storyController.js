@@ -1,6 +1,5 @@
-const { UploadStream } = require("cloudinary");
 const Story = require("../models/story");
-const { cloudinary } = require("../cloudinary/index");
+
 module.exports.index =
     async (req, res, next) => {
         if (!req.query.search) {

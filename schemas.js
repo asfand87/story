@@ -26,7 +26,7 @@ module.exports.userSchema = Joi.object({
             "string.min": "Must have at least 8 characters",
             "object.regex": "Must have at least 8 characters",
             "string.pattern.base": "Must be 8 characters long, must have one upperCase, one lowerCase and one special character and can no longer than 30 characters"
-        })
+        }),
 
-})
+}).options({ allowUnknown: true })
 

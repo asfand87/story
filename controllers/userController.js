@@ -1,3 +1,4 @@
+// https://www.npmjs.com/package/locus
 const User = require("../models/user");
 
 
@@ -10,14 +11,20 @@ module.exports.register = async (req, res, next) => {
     try {
         const { email, username, password } = req.body;
         const user = new User({ email, username });
-        const registeredUser = await User.register(user, password);
-        // once the user is registered log them in
-        req.login(registeredUser, err => {
-            if (err) return next(err);
-            req.flash("success", "Welcome to Story");
-            res.redirect("/story");
-        });
-        // console.log(registeredUser);
+        console.log(user);
+        // eval(require("locus"))
+        if (req.body.adminCode === "secretcode123") {
+            user.isAdmin = true;
+        } else {
+            const registeredUser = await User.register(user, password);
+            // once the user is registered log them in
+            req.login(registeredUser, err => {
+                if (err) return next(err);
+                req.flash("success", "Welcome to Story");
+                res.redirect("/story");
+            });
+        }
+
 
     } catch (e) {
         req.flash("error", e.message);

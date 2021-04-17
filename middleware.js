@@ -51,7 +51,7 @@ module.exports.isAuthor = async (req, res, next) => {
     const foundStory = await Story.findById(id);
     if (!foundStory.author.equals(req.user._id)) {
         req.flash("error", "you don't have permission to do that!");
-        return res.redirect(`/story/${id}`);
+        res.redirect(`/story/${id}`);
     }
     next();
 }
@@ -61,7 +61,7 @@ module.exports.isReviewAuthor = async (req, res, next) => {
     const foundComment = await Comment.findById(commentId);
     if (!foundComment.author.equals(req.user._id)) {
         req.flash("error", "you don't have permission to do that!");
-        return res.redirect(`/story/${id}`);
+        res.redirect(`/story/${id}`);
     }
     next();
 }

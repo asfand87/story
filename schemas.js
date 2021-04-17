@@ -1,5 +1,4 @@
 const Joi = require("joi");
-const passwordComplexity = require("joi-password-complexity").default;
 module.exports.storySchema = Joi.object({
     story: Joi.object({
         title: Joi.string().required(),

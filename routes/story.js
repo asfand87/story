@@ -25,7 +25,7 @@ router.get("/new", isLoggedIn, catchAsync(renderNewForm));
 // get single story, update and delete it by it's id.
 router.route("/:id")
     .get(catchAsync(showOneStory))
-    .put(isLoggedIn, isAuthor, upload.array('image', 3), validateStory, catchAsync(updateStory))
+    .put(isLoggedIn, isAuthor, upload.array('image'), validateStory, catchAsync(updateStory))
     .delete(isLoggedIn, isAuthor, catchAsync(deleteStory))
 
 

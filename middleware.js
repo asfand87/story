@@ -2,7 +2,6 @@ const { storySchema, commentSchema, userSchema } = require("./schemas.js");
 const ExpressError = require("./utils/ExpressError");
 const Story = require("./models/story");
 const Comment = require("./models/comment");
-const User = require("./models/user");
 
 module.exports.validateStory = (req, res, next) => {
     const { error } = storySchema.validate(req.body);

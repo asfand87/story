@@ -47,6 +47,8 @@ module.exports.renderNewForm = async (req, res, next) => {
 module.exports.createStory = async (req, res, next) => {
     // req.files is an array from mutller
 
+
+
     const story = new Story(req.body.story);
     // returning an array and inserting that in story.image
     const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
@@ -56,6 +58,8 @@ module.exports.createStory = async (req, res, next) => {
     // console.log(story);
     req.flash("success", "Successfully made new story");
     res.redirect(`/story/${story._id}`);
+
+
 };
 
 module.exports.updateStoryForm = async (req, res, next) => {

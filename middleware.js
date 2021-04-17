@@ -1,4 +1,4 @@
-const { storySchema, commentSchema, paswwordSchema } = require("./schemas.js");
+const { storySchema, commentSchema, userSchema } = require("./schemas.js");
 const ExpressError = require("./utils/ExpressError");
 const Story = require("./models/story");
 const Comment = require("./models/comment");
@@ -68,8 +68,8 @@ module.exports.isReviewAuthor = async (req, res, next) => {
 }
 
 
-module.exports.validatePassword = (req, res, next) => {
-    const { error } = paswwordSchema.validate(req.body);
+module.exports.validateUser = (req, res, next) => {
+    const { error } = userSchema.validate(req.body);
     if (error) {
         const msg = error.details
             .map(

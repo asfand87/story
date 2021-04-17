@@ -1,4 +1,5 @@
 const Joi = require("joi");
+const passwordComplexity = require("joi-password-complexity").default;
 module.exports.storySchema = Joi.object({
     story: Joi.object({
         title: Joi.string().required(),
@@ -12,9 +13,21 @@ module.exports.commentSchema = Joi.object({
         comment: Joi.string().required(),
     }).required(),
 })
-module.exports.paswwordSchema = Joi.object({
+
+
+module.exports.userSchema = Joi.object({
     username: Joi.string().alphanum().min(3).required(),
     email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).min(6).required(),
-    password: Joi.string().min(6).pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
+    password: Joi.string()
+        .min(8)
+        .regex(/^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*\d)(?=\S*[^\w\s])\S{8,30}$/)
+        .required()
+        .label("Password")
+        .messages({
+            "string.min": "Must have at least 8 characters",
+            "object.regex": "Must have at least 8 characters",
+            "string.pattern.base": "Must be 8 characters long, must have one upperCase, one lowerCase and one special character and can no longer than 30 characters"
+        })
+
 })
 

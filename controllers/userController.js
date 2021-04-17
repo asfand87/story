@@ -31,7 +31,7 @@ module.exports.renderLogin = async (req, res, next) => {
 }
 
 module.exports.login = (req, res) => {
-    req.flash("success", "Welcome Back!");
+    req.flash("success", `Welcome Back ${req.user.username} `);
     // console.log(req.session);
     const redirectUrl = req.session.returnTo || "/story";
     delete req.session.returnTo;

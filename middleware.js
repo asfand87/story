@@ -49,21 +49,25 @@ module.exports.isLoggedIn = (req, res, next) => {
 module.exports.isAuthor = async (req, res, next) => {
     const { id } = req.params;
     const foundStory = await Story.findById(id);
-    if (!foundStory.author.equals(req.user._id)) {
-        req.flash("error", "you don't have permission to do that!");
-        res.redirect(`/story/${id}`);
+    if (foundStory.author.equals(req.user._id) || req.user.isAdmin) {
+
+        return next();
     }
-    next();
+    req.flash("error", "you don't have permission to do that!");
+    return res.redirect(`/story/${id}`);
 }
+
 
 module.exports.isReviewAuthor = async (req, res, next) => {
     const { id, commentId } = req.params;
     const foundComment = await Comment.findById(commentId);
-    if (!foundComment.author.equals(req.user._id)) {
-        req.flash("error", "you don't have permission to do that!");
-        res.redirect(`/story/${id}`);
+    if (foundComment.author.equals(req.user._id) || req.user.isAdmin) {
+
+        return next();
     }
-    next();
+    req.flash("error", "you don't have permission to do that!");
+    return res.redirect(`/story/${id}`);
+
 }
 
 

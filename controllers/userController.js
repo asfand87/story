@@ -11,7 +11,7 @@ module.exports.register = async (req, res, next) => {
     try {
         const { email, username, password } = req.body;
         const user = new User({ email, username });
-        console.log(user);
+        // console.log(user);
         // eval(require("locus"))
         if (req.body.adminCode === "secretcode123") {
             user.isAdmin = true;

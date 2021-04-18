@@ -1,4 +1,5 @@
 <% layout('layouts/boilerplate') -%>
+<!-- https://github.com/LunarLogic/starability -->
 <link rel="stylesheet" href="/stylesheets/stars.css" />
 <div class="container min-vh-100">
   <div class="row my-5">
@@ -75,26 +76,64 @@
     </div>
     <%if(currentUser){ %>
     <div class="col-lg-6 my-5">
-      <h4 class="mt-4">Leave a comment</h4>
       <form
         action="/story/<%=story._id%>/comment"
         method="POST"
         class="validated-form"
         novalidate
       >
-        <div class="mt-5 mb-3">
-          <label for="rating" class="form-label"><b>Rating</b> </label>
-          <input
-            type="range"
-            class="form-range"
-            min="1"
-            max="5"
-            name="comment[rating]"
-            id="rating"
-          />
+        <div class="mt-4 mb-3">
+          <fieldset class="starability-basic">
+            <legend class="lead">Rating:</legend>
+            <input
+              type="radio"
+              id="no-rate"
+              class="input-no-rate"
+              name="comment[rating]"
+              value="0"
+              checked
+              aria-label="No rating."
+            />
+            <input
+              type="radio"
+              id="second-rate1"
+              name="comment[rating]"
+              value="1"
+            />
+            <label for="second-rate1" title="Terrible">1 star</label>
+            <input
+              type="radio"
+              id="second-rate2"
+              name="comment[rating]"
+              value="2"
+            />
+            <label for="second-rate2" title="Not good">2 stars</label>
+            <input
+              type="radio"
+              id="second-rate3"
+              name="comment[rating]"
+              value="3"
+            />
+            <label for="second-rate3" title="Average">3 stars</label>
+            <input
+              type="radio"
+              id="second-rate4"
+              name="comment[rating]"
+              value="4"
+            />
+            <label for="second-rate4" title="Very good">4 stars</label>
+            <input
+              type="radio"
+              id="second-rate5"
+              name="comment[rating]"
+              value="5"
+            />
+            <label for="second-rate5" title="Amazing">5 stars</label>
+          </fieldset>
         </div>
-        <div class="mt-5">
-          <label for="description"><b>Comment</b> </label>
+
+        <div class="mt-2">
+          <label for="description" class="lead"><b>Comment</b> </label>
           <textarea
             type="text"
             name="comment[comment]"
@@ -104,7 +143,12 @@
             required
           ></textarea>
         </div>
-        <button class="btn btn-primary btn-success mt-1">Comment</button>
+        <button class="btn btn-primary btn-success mt-1 mb-5">
+          Comment
+          <span>
+            <i class="fas fa-comment"></i>
+          </span>
+        </button>
       </form>
 
       <% } %> <% for(let comment of story.comments){ %>

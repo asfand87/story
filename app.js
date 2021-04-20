@@ -32,8 +32,8 @@ const User = require("./models/user");
 //https://www.npmjs.com/package/connect-mongo
 const mongoStore = require('connect-mongo');
 
-const HOST = '127.0.0.1';
-const PORT = 8080;
+const HOST = '0.0.0.0';
+const PORT = process.env.PORT || 8080;
 
 const storyRoutes = require("./routes/story");
 const commentRoutes = require("./routes/comment");

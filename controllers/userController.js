@@ -1,6 +1,9 @@
 // https://www.npmjs.com/package/locus
 const User = require("../models/user");
+const nodemailer = require("nodemailer");
 
+const crypto = require("crypto");
+const { waterfall } = require("async");
 
 module.exports.renderRegister = (req, res, next) => {
     res.render("users/register");
@@ -50,3 +53,29 @@ module.exports.logout = async (req, res, next) => {
     req.flash("success", "Successfully loged you out!");
     res.redirect("/story");
 };
+
+module.exports.renderForgot = async (req, res) => {
+    res.render('users/forgot');
+}
+
+module.exports.forgot = async (req, res) => {
+    waterfall([
+        (done) => {
+            crypto.randomBytes(20, (err, buf) => {
+                const token = buf.toString('hex');
+                done(err, token);
+            })
+        },
+        (token, done) => {
+            User.findOne({ email: req.body.email }, async (err, user) => {
+                if (!user) {
+                    req.flash("error", 'No account with that email address exists.');
+                    return res.redirect('/forgot');
+                }
+                user.resetPasswordToken = token;
+                user.resetPasswordToken = Date.now() + 3600000; // 1hour 
+                await user.save();
+            })
+        }
+    ])
+}

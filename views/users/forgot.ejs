@@ -1,0 +1,28 @@
+<% layout('layouts/boilerplate') -%>
+
+<div class="container min-vh-100">
+  <p class="my-5 text-center lead">
+    Please enter your email address to recover password
+  </p>
+  <div class="row">
+    <div class="col-4 offset-4 mt-5">
+      <form action="/forgot" method="POST" class="validated-form" novalidate>
+        <div class="mb-3">
+          <label for="email" class="mt-5"></label>
+          <input
+            id="email"
+            type="text"
+            name="recoveryEmail"
+            class="form-control"
+            placeholder="Please enter your email address"
+            value=""
+            required
+          />
+          <div class="valid-feedback">Looks Good!</div>
+        </div>
+
+        <button class="btn btn-primary btn-lg btn-block w-100">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

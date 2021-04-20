@@ -1,5 +1,11 @@
+// this is what i have searched for searching the database for locations
+// https://stackoverflow.com/questions/38421664/fuzzy-searching-with-mongodb
 const Story = require("../models/story");
 
+
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 module.exports.index =
     async (req, res, next) => {
         if (!req.query.search) {
@@ -8,11 +14,8 @@ module.exports.index =
             res.render("story/index", { results });
         } else {
             const search = req.query.search;
-            // let firstLetter = search.slice(0, 1).toUpperCase();
-            // let restOftheWord = search.slice(1);
-            // let word = firstLetter + restOftheWord;
-            // console.log(word);
-            const results = await Story.find({ location: search });
+            const regex = new RegExp(escapeRegex(search), 'gi');
+            const results = await Story.find({ location: regex });
             if (results.length < 1) {
                 req.flash("error", "No stories found!");
                 return res.redirect("/story");
@@ -49,9 +52,10 @@ module.exports.createStory = async (req, res, next) => {
 
 
     const story = new Story(req.body.story);
+
     // returning an array and inserting that in story.image
     const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
-    story.images.push(...imgs);
+    story.images = imgs;
     story.author = req.user._id;
     await story.save();
     // console.log(story);

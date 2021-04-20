@@ -15,6 +15,7 @@ module.exports.storySchema = Joi.object({
 module.exports.commentSchema = Joi.object({
     comment: Joi.object({
         comment: Joi.string().required(),
+        rating: Joi.number().min(1).max(5).required(),
     }).required(),
 });
 
@@ -33,5 +34,9 @@ module.exports.userSchema = Joi.object({
             "string.pattern.base": "Must be 8 characters long, must have one upperCase, one lowerCase and one special character and can no longer than 30 characters"
         })
 
+<<<<<<< HEAD
 }).options({ stripUnknown: true });
+=======
+})
+>>>>>>> master
 

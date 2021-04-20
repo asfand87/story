@@ -2,31 +2,36 @@
 const User = require("../models/user");
 const nodemailer = require("nodemailer");
 
+<<<<<<< HEAD
 const crypto = require("crypto");
 const { waterfall } = require("async");
 
+=======
+// form rendering function for registeration.
+>>>>>>> master
 module.exports.renderRegister = (req, res, next) => {
     res.render("users/register");
 };
 
-
+// register function.
 module.exports.register = async (req, res, next) => {
     try {
         const { email, username, password } = req.body;
         const user = new User({ email, username });
         // console.log(user);
         // eval(require("locus"))
-        if (req.body.adminCode === "secretcode123") {
-            user.isAdmin = true;
-        } else {
-            const registeredUser = await User.register(user, password);
-            // once the user is registered log them in
-            req.login(registeredUser, err => {
-                if (err) return next(err);
-                req.flash("success", "Welcome to Story");
-                res.redirect("/story");
-            });
-        }
+        // if (req.body.adminCode === "secretcode123") {
+        //     user.isAdmin = true;
+        // }
+        // to make admin i m going to my mongodb database and making user.isAdmin true to make any user admin.
+        const registeredUser = await User.register(user, password);
+        // once the user is registered log them in
+        req.login(registeredUser, err => {
+            if (err) return next(err);
+            req.flash("success", "Welcome to Story");
+            res.redirect("/story");
+        });
+
 
 
     } catch (e) {

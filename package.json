@@ -1,8 +1,7 @@
 {
   "name": "finalprojectv1",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
@@ -33,5 +32,8 @@
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^6.1.0",
     "path": "^0.12.7"
-  }
+  },
+  "devDependencies": {},
+  "keywords": [],
+  "description": ""
 }

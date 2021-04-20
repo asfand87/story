@@ -14,7 +14,7 @@ const UserSchema = new Schema({
         type: Boolean,
         default: false,
     }
-}).options({ stripUnknown: true });
+});
 
 // pluging passport local mongoose in our user model.
 UserSchema.plugin(passportLocalMongoose);

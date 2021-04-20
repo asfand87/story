@@ -13,6 +13,7 @@
             name="username"
             class="form-control"
             placeholder="Please enter new username"
+            title="please enter username to continue, only alphanumeric values"
             value=""
             required
           />
@@ -26,6 +27,7 @@
             name="email"
             class="form-control"
             placeholder="Please enter your email address"
+            title="please enter email to continue"
             value=""
             required
           />
@@ -40,14 +42,12 @@
             class="form-control"
             placeholder="Enter new password"
             pattern="(?=\S*[a-z])(?=\S*[A-Z])(?=\S*\d)(?=\S*[^\w\s])\S{8,30}"
+            title="Must be 8 characters long, must have one upperCase, one lowerCase,
+            one special character[',#,!,%'] and no longer than 30 characters"
             value=""
             required
           />
           <div class="valid-feedback">Looks Good!</div>
-          <div class="invalid-feedback">
-            "Must be 8 characters long, must have one upperCase, one lowerCase,
-            one special character[",#,!,%"] and no longer than 30 characters
-          </div>
         </div>
 
         <!-- Admin -->

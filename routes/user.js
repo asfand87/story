@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const catchAsync = require("../utils/catchAsync");
 const passport = require("passport");
-const { renderRegister, register, renderLogin, login, logout, renderForgot, forgot } = require("../controllers/userController");
+const { renderRegister, register, renderLogin, login, logout, renderForgot, forgot, passwordReset, postPassword } = require("../controllers/userController");
 const { validateUser } = require("../middleware")
 
 
@@ -22,7 +22,15 @@ router.get("/logout", catchAsync(logout));
 
 router.route('/forgot')
     .get(renderForgot)
+    // sending link to the user in this route.
     .post(catchAsync(forgot));
 
 
+
+// this route is to show new password route.
+router.get('/reset/:token', catchAsync(passwordReset));
+
+
+// this route is for posting new user password to user model.
+router.post('/reset/:token', catchAsync(postPassword));
 module.exports = router;

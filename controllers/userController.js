@@ -1,21 +1,22 @@
 // https://www.npmjs.com/package/locus
 const User = require("../models/user");
 
-
+// form rendering function for registeration.
 module.exports.renderRegister = (req, res, next) => {
     res.render("users/register");
 };
 
-
+// register function.
 module.exports.register = async (req, res, next) => {
     try {
         const { email, username, password } = req.body;
         const user = new User({ email, username });
         // console.log(user);
         // eval(require("locus"))
-        if (req.body.adminCode === "secretcode123") {
-            user.isAdmin = true;
-        }
+        // if (req.body.adminCode === "secretcode123") {
+        //     user.isAdmin = true;
+        // }
+        // to make admin i m going to my mongodb database and making user.isAdmin true to make any user admin.
         const registeredUser = await User.register(user, password);
         // once the user is registered log them in
         req.login(registeredUser, err => {

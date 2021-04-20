@@ -52,9 +52,10 @@ module.exports.createStory = async (req, res, next) => {
 
 
     const story = new Story(req.body.story);
+
     // returning an array and inserting that in story.image
     const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
-    story.images.push(...imgs);
+    story.images = imgs;
     story.author = req.user._id;
     await story.save();
     // console.log(story);

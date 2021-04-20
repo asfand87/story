@@ -1,4 +1,7 @@
+const strip = require("cli-color/strip");
 const Joi = require("joi");
+
+// validation for story object
 module.exports.storySchema = Joi.object({
     story: Joi.object({
         title: Joi.string().required(),
@@ -7,13 +10,15 @@ module.exports.storySchema = Joi.object({
     }).required(),
 });
 
+
+// validation for comment object
 module.exports.commentSchema = Joi.object({
     comment: Joi.object({
         comment: Joi.string().required(),
     }).required(),
-})
+});
 
-
+// validation for user object
 module.exports.userSchema = Joi.object({
     username: Joi.string().alphanum().min(3).required(),
     email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).min(6).required(),
@@ -26,7 +31,7 @@ module.exports.userSchema = Joi.object({
             "string.min": "Must have at least 8 characters",
             "object.regex": "Must have at least 8 characters",
             "string.pattern.base": "Must be 8 characters long, must have one upperCase, one lowerCase and one special character and can no longer than 30 characters"
-        }),
+        })
 
-}).options({ allowUnknown: true })
+}).options({ stripUnknown: true });
 

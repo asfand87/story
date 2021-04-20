@@ -29,6 +29,8 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 //User model.
 const User = require("./models/user");
+//https://www.npmjs.com/package/connect-mongo
+const mongoStore = require('connect-mongo');
 
 const HOST = '127.0.0.1';
 const PORT = 8080;
@@ -37,9 +39,11 @@ const storyRoutes = require("./routes/story");
 const commentRoutes = require("./routes/comment");
 const userRoutes = require("./routes/user");
 
+const dbUrl = process.env.URL || 'mongodb://localhost:27017/story';
+// process.env.URL;
 
 // connecting to the database.
-mongoose.connect(process.env.URL, {
+mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useUnifiedTopology: true,
@@ -70,8 +74,19 @@ app.use(methodOverride("_method"));
 
 app.use(express.static(path.join(__dirname, "public")));
 
+const store = mongoStore.create({
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret: process.env.STORESECRET,
+    }
+})
+store.on("error", function (e) {
+    console.log("Session store error", e)
+})
 // options for session
 const sessionConfig = {
+    store,
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,

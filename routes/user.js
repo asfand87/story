@@ -28,9 +28,7 @@ router.route('/forgot')
 
 
 // this route is to show new password route.
-router.get('/reset/:token', catchAsync(passwordReset));
-
-
+router.route('/reset/:token').get(catchAsync(passwordReset));
 // this route is for posting new user password to user model.
-router.post('/reset/:token', catchAsync(postPassword));
+post(catchAsync(postPassword));
 module.exports = router;

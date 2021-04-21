@@ -18,7 +18,7 @@ const ejsMate = require("ejs-mate");
 // https://www.npmjs.com/package/express-session
 const session = require("express-session");
 // my own defined error class
-const ExpressError = require("./utils/ExpressError");
+const ExpressError = require('./utils/ExpressError');
 // https://www.npmjs.com/package/connect-flash
 const flash = require("connect-flash");
 // https://www.npmjs.com/package/method-override

@@ -30,7 +30,7 @@ const LocalStrategy = require("passport-local");
 //User model.
 const User = require("./models/user");
 //https://www.npmjs.com/package/connect-mongo
-const mongoStore = require('connect-mongo');
+const MongoStore = require('connect-mongo');
 
 const HOST = '0.0.0.0';
 const PORT = process.env.PORT || 8080;
@@ -74,7 +74,7 @@ app.use(methodOverride("_method"));
 
 app.use(express.static(path.join(__dirname, "public")));
 
-const store = mongoStore.create({
+const store = MongoStore.create({
     mongoUrl: dbUrl,
     touchAfter: 24 * 60 * 60,
     crypto: {

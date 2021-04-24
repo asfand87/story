@@ -13,8 +13,9 @@ const storage = new CloudinaryStorage({
     cloudinary,
     params: {
         folder: 'Story',
-        allowedFormats: ['jpeg', 'png', 'jpg'],
-    }
+        allowed_formats: ["JPEG", "PNG", "JPG"],
+    },
+
 })
 
 module.exports = {

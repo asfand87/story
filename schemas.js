@@ -15,7 +15,7 @@ module.exports.storySchema = Joi.object({
 module.exports.commentSchema = Joi.object({
     comment: Joi.object({
         comment: Joi.string().required(),
-        rating: Joi.number().min(1).max(5).required(),
+        rating: Joi.number().min(0).max(5).required(),
     }).required(),
 });
 

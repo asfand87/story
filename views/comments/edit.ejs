@@ -1,86 +1,43 @@
-<% layout('layouts/boilerplate.ejs') %>
-<!-- https://github.com/LunarLogic/starability -->
 <link rel="stylesheet" href="/stylesheets/stars.css" />
-<div class="container min-vh-100">
-  
-  <div class="col-6 offset-3 my-5">
-    <h2>Update Comment</h2>
-    <form
-      action="/story/<%=story._id%>/comment/<%=comment._id%>?_method=PUT"
-      method="POST"
-      class="mb-3 validated-form mt-5"
-      novalidate
-    >
-    <div class="mt-4 mb-3">
-      <fieldset class="starability-basic">
-        <legend class="lead">Rating:</legend>
-        <input
-          type="radio"
-          id="no-rate"
-          class="input-no-rate"
-          name="comment[rating]"
-          value="<%=comment.rating %> "
-          checked
-          aria-label="No rating."
-          
-        />
-        <input
-          type="radio"
-          id="second-rate1"
-          name="comment[rating]"
-          value="1"
-        />
-        <label for="second-rate1" title="Terrible">1 star</label>
-        <input
-          type="radio"
-          id="second-rate2"
-          name="comment[rating]"
-          value="2"
-        />
-        <label for="second-rate2" title="Not good">2 stars</label>
-        <input
-          type="radio"
-          id="second-rate3"
-          name="comment[rating]"
-          value="3"
-        />
-        <label for="second-rate3" title="Average">3 stars</label>
-        <input
-          type="radio"
-          id="second-rate4"
-          name="comment[rating]"
-          value="4"
-        />
-        <label for="second-rate4" title="Very good">4 stars</label>
-        <input
-          type="radio"
-          id="second-rate5"
-          name="comment[rating]"
-          value="5"
-        />
-        <label for="second-rate5" title="Amazing">5 stars</label>
-      </fieldset>
-    </div>
-  </div>
-      <div class="col-6 offset-3 mb-3">
-        <label class="form-label" for="body">Comment</label>
-        <textarea
-          class="form-control"
-          name="comment[comment]"
-          id="body"
-          cols="30"
-          rows="3"
-          required
-        >
-        <%=comment.comment%></textarea
-        >
-        <div class="valid-feedback">looks good</div>
-      </div>
-      <div class="col-6 offset-3">
-        <button class="btn btn-success">Submit</button>
-        <a class="btn btn-secondary" href="/story/<%=story._id%>">Cancell</a>
-      </div>
-     
-    </form>
-  </div>
-</div>
+<% layout('layouts/boilerplate.ejs') %>
+	<!-- https://github.com/LunarLogic/starability -->
+
+
+
+	<div class="container min-vh-100">
+		<div class="col-6 offset-3 my-5">
+			<h2>Update Comment</h2>
+			<form class="validated-form mb-3 mt-5" action="/story/<%=story._id%>/comment/<%=comment._id%>?_method=PUT"
+				method="POST">
+				<div class="mt-4 mb-3">
+					<fieldset class="starability-basic">
+						<legend class="lead">Rating:</legend>
+						<input type="radio" id="no-rate" class="input-no-rate" name="comment[rating]" value="0" checked
+							aria-label="No rating." />
+						<input type="radio" id="second-rate1" name="comment[rating]" value="1" />
+						<label for="second-rate1" title="Terrible">1 star</label>
+						<input type="radio" id="second-rate2" name="comment[rating]" value="2" />
+						<label for="second-rate2" title="Not good">2 stars</label>
+						<input type="radio" id="second-rate3" name="comment[rating]" value="3" />
+						<label for="second-rate3" title="Average">3 stars</label>
+						<input type="radio" id="second-rate4" name="comment[rating]" value="4" />
+						<label for="second-rate4" title="Very good">4 stars</label>
+						<input type="radio" id="second-rate5" name="comment[rating]" value="5" />
+						<label for="second-rate5" title="Amazing">5 stars</label>
+					</fieldset>
+				</div>
+		</div>
+		<div class="col-6 offset-3 mb-3">
+			<label class="form-label" for="body">Comment</label>
+			<textarea class="form-control" name="comment[comment]" id="body" cols="30" rows="3"
+				required=required><%=comment.comment%></textarea>
+		</div>
+
+		<div class="col-6 offset-3">
+			<button class="btn btn-success">Submit</button>
+			<a class="btn btn-secondary" href="/story/<%=story._id%>">Cancell</a>
+		</div>
+
+		</form>
+	</div>
+	</div>

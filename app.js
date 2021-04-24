@@ -39,7 +39,7 @@ const storyRoutes = require("./routes/story");
 const commentRoutes = require("./routes/comment");
 const userRoutes = require("./routes/user");
 
-const dbUrl = process.env.URL || 'mongodb://localhost:27017/story';
+const dbUrl = 'mongodb://localhost:27017/story' || process.env.URL;
 // process.env.URL;
 
 // connecting to the database.

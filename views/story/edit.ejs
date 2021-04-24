@@ -1,67 +1,37 @@
 <% layout('layouts/boilerplate') -%>
 
-<div class="container min-vh-100">
-  <h1 class="text-center mt-3">Edit <%=story.title%></h1>
-  <div class="row my-5 gy-5">
-    <div class="col-lg-6 offset-3 border">
-      <form
-        action="/story/<%=story._id %>?_method=PUT "
-        method="POST"
-        class="validated-form"
-        enctype="multipart/form-data"
-        novalidate
-      >
-        <div class="mb-3">
-          <label for="name">Title </label>
-          <input
-            type="text"
-            name="story[title]"
-            class="form-control"
-            placeholder="title"
-            value="<%=story.title %>"
-            required
-          />
+    <div class="container min-vh-100">
+        <h1 class="text-center mt-3">Edit <%=story.title%>
+        </h1>
+        <div class="row my-5 gy-5">
+            <div class="col-lg-6 offset-3 border">
+                <form action="/story/<%=story._id %>?_method=PUT " method="POST" class="validated-form"
+                    enctype="multipart/form-data" novalidate>
+                    <div class="mb-3">
+                        <label for="name">Title </label>
+                        <input type="text" name="story[title]" class="form-control" placeholder="title"
+                            value="<%=story.title %>" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="location">Location</label>
+                        <input type="text" name="story[location]" class="form-control" placeholder="Location"
+                            id="location" value="<%=story.location%>  " required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="description">Description</label>
+                        <textarea type="text" name="story[description]" class="form-control" placeholder="Description"
+                            id="description" required><%=story.description %></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <div class="image__label">
+                            <label for="formFileMultiple" class="form-label">Add Images</label>
+                        </div>
+                        <input type="file" class="from-conotrol" name="image" id="image" accept="image/*" multiple />
+
+                    </div>
+                    <button class="btn btn-primary btn-success">Submit</button>
+                    <a class="btn btn-secondary" href="/story"> Cancell </a>
+                </form>
+            </div>
         </div>
-        <div class="mb-3">
-          <label class="form-label" for="location">Location</label>
-          <input
-            type="text"
-            name="story[location]"
-            class="form-control"
-            placeholder="Location"
-            id="location"
-            value="<%=story.location%>  "
-            required
-          />
-        </div>
-        <div class="mb-3">
-          <label class="form-label" for="description">Description</label>
-          <textarea
-            type="text"
-            name="story[description]"
-            class="form-control"
-            placeholder="Description"
-            id="description"
-            required
-          >
-          <%=story.description %> </textarea
-          >
-        </div>
-        <div class="mb-3">
-          <div class="image__label">
-            <label for="formFileMultiple" class="form-label">Add Images</label>
-          </div>
-          <input
-            type="file"
-            class="from-conotrol"
-            name="image"
-            id="image"
-            multiple
-          />
-        </div>
-        <button class="btn btn-primary btn-success">Submit</button>
-        <a class="btn btn-secondary" href="/story"> Cancell </a>
-      </form>
     </div>
-  </div>
-</div>

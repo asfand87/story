@@ -1,68 +1,48 @@
 <% layout('layouts/boilerplate') -%>
 
-<div class="container min-vh-100">
-  <h1 class="text-center mt-5">Add Story</h1>
-  <div class="row my-5 gy-5">
-    <div class="col-6 offset-3">
-      <form
-        action="/story"
-        method="POST"
-        class="validated-form"
-        novalidate
-        enctype="multipart/form-data"
-      >
-        <div class="my-3">
-          <label for="name">Title</label>
+  <div class="container min-vh-100">
+    <h1 class="text-center mt-5">Add Story</h1>
+    <div class="row my-5 gy-5">
+      <div class="col-6 offset-3">
+        <form action="/story" method="POST" class="validated-form" novalidate enctype="multipart/form-data">
+          <div class="my-3">
+            <label for="name">Title</label>
 
-          <input
-            type="text"
-            name="story[title]"
-            class="form-control"
-            placeholder="title"
-            required
-          />
-        </div>
-
-        <div class="my-3">
-          <label for="location">Location</label>
-          <input
-            type="text"
-            name="story[location]"
-            class="form-control"
-            placeholder="Location"
-            id="location"
-            required
-          />
-        </div>
-        <div class="my-3">
-          <label for="description">Description</label>
-          <textarea
-            type="text"
-            name="story[description]"
-            class="form-control"
-            placeholder="Description"
-            id="description"
-            required
-          ></textarea>
-        </div>
-
-        <!-- workign on displayed names for files. -->
-
-        <div class="mb-3">
-          <div class="image__label">
-            <label for="formFileMultiple" class="form-label">Add Images</label>
+            <input type="text" name="story[title]" class="form-control" placeholder="title" required />
+            <div class="valid-feedback">Looks Good!</div>
+            <div class="invalid-feedback">
+              Please enter the title of your story
+            </div>
           </div>
-          <input
-            type="file"
-            class="from-conotrol"
-            name="image"
-            id="image"
-            multiple
-          />
-        </div>
-        <button class="btn btn-primary btn-success">Add Story</button>
-        <a href="/story" class="btn btn-primary btn-success">Cancell</a>
-      </form>
+
+          <div class="my-3">
+            <label for="location">Location</label>
+            <input type="text" name="story[location]" class="form-control" placeholder="Location" id="location"
+              required />
+            <div class="valid-feedback">Looks Good!</div>
+            <div class="invalid-feedback">Please enter the Location</div>
+          </div>
+          <div class="my-3">
+            <label for="description">Description</label>
+            <textarea type="text" name="story[description]" class="form-control" placeholder="Description"
+              id="description" required></textarea>
+            <div class="valid-feedback">Looks Good!</div>
+            <div class="invalid-feedback">Please enter description</div>
+          </div>
+
+          <!-- workign on displayed names for files. -->
+
+          <div class="mb-3">
+            <div class="image__label">
+              <label for="formFileMultiple" class="form-label">Add Images</label>
+            </div>
+            <input type="file" class="from-conotrol" name="image" id="image" accept="image/*" multiple required />
+            <div class="valid-feedback">Looks Good!</div>
+            <div class="invalid-feedback">Please select atleast one image</div>
+          </div>
+          <button class="btn btn-primary btn-success">Add Story</button>
+          <a href="/story" class="btn btn-primary btn-success">Cancell</a>
+        </form>
+      </div>
     </div>
   </div>
-</div>

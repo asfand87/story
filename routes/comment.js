@@ -13,7 +13,7 @@ router.get("/:commentId/edit", isLoggedIn, isReviewAuthor, catchAsync(updateComm
 
 //get update and delete comment by theiry id.
 router.route("/:commentId")
-    .put(isLoggedIn, validateComment, isReviewAuthor, catchAsync(updateComment))
+    .put(isLoggedIn, isReviewAuthor, validateComment, catchAsync(updateComment))
     .delete(isLoggedIn, isReviewAuthor, catchAsync(deleteComment))
 
 

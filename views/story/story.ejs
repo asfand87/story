@@ -1,184 +1,122 @@
 <% layout('layouts/boilerplate') -%>
-<!-- https://github.com/LunarLogic/starability -->
-<link rel="stylesheet" href="/stylesheets/stars.css" />
-<div class="container min-vh-100">
-  <div class="row my-5">
-    <div class="col-lg-6 my-5">
-      <figure class="figure">
-        <h5><b>Title</b> : <%=story.title%></h5>
-        <!-- testing carousel -->
-        <div
-          id="carouselExampleControls"
-          class="carousel slide"
-          data-bs-ride="carousel"
-        >
-          <div class="carousel-inner">
-            <% story.images.forEach((image, index)=>{ %>
-            <div class="carousel-item <%=index ===0?'active':''%>">
-              <img
-                src="<%=image.url %> "
-                class="d-block w-100 carousel__image"
-                alt="..."
-              />
-            </div>
-            <% }) %>
-          </div>
-          <% if(story.images.length > 1){ %>
-
-          <button
-            class="carousel-control-prev"
-            type="button"
-            data-bs-target="#carouselExampleControls"
-            data-bs-slide="prev"
-          >
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button
-            class="carousel-control-next"
-            type="button"
-            data-bs-target="#carouselExampleControls"
-            data-bs-slide="next"
-          >
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-          <% } %>
-        </div>
-        <!-- end of -->
-
-        <figcaption class="figure-caption mb-3">
-          <b>Posted By </b><%=story.author.username%>
-        </figcaption>
-        <h6 class="my-2"><b>Description</b> <%=story.description%></h6>
-        <p><b>Location</b> : <%=story.location%></p>
-        <!-- if current user is present and story.author === currentUser._id -->
-        <% if(currentUser && story.author.equals(currentUser._id) || currentUser
-        && currentUser.isAdmin){ %>
-        <div class="buttons d-flex justify-content-between">
-          <div class="__formContent">
-            <form
-              action="/story/<%=story._id%>?_method=DELETE"
-              method="POST"
-              class="d-inline"
-            >
-              <button class="btn btn-danger p-2" type="submit">
-                <i class="fas fa-trash">Delete</i>
-              </button>
-            </form>
-            <a href="/story/<%=story._id%>/edit" class="btn btn-secondary p-2"
-              ><i class="fas fa-edit">Edit</i></a
-            >
-          </div>
-        </div>
-      </figure>
-      <% } %>
-    </div>
-    <%if(currentUser){ %>
-    <div class="col-lg-6 my-5">
-      <form
-        action="/story/<%=story._id%>/comment"
-        method="POST"
-        class="validated-form"
-        novalidate
-      >
-        <div class="mt-4 mb-3">
-          <fieldset class="starability-basic">
-            <legend class="lead">Rating:</legend>
-            <input
-              type="radio"
-              id="no-rate"
-              class="input-no-rate"
-              name="comment[rating]"
-              value="0"
-              checked
-              aria-label="No rating."
-            />
-            <input
-              type="radio"
-              id="second-rate1"
-              name="comment[rating]"
-              value="1"
-            />
-            <label for="second-rate1" title="Terrible">1 star</label>
-            <input
-              type="radio"
-              id="second-rate2"
-              name="comment[rating]"
-              value="2"
-            />
-            <label for="second-rate2" title="Not good">2 stars</label>
-            <input
-              type="radio"
-              id="second-rate3"
-              name="comment[rating]"
-              value="3"
-            />
-            <label for="second-rate3" title="Average">3 stars</label>
-            <input
-              type="radio"
-              id="second-rate4"
-              name="comment[rating]"
-              value="4"
-            />
-            <label for="second-rate4" title="Very good">4 stars</label>
-            <input
-              type="radio"
-              id="second-rate5"
-              name="comment[rating]"
-              value="5"
-            />
-            <label for="second-rate5" title="Amazing">5 stars</label>
-          </fieldset>
-        </div>
-
-        <div class="mt-2">
-          <label for="description" class="lead"><b>Comment</b> </label>
-          <textarea
-            type="text"
-            name="comment[comment]"
-            class="form-control mt-3"
-            placeholder="Comment"
-            id="comment"
-            required
-          ></textarea>
-        </div>
-        <button class="btn btn-primary btn-success mt-1 mb-5">
-          Comment
-          <span>
-            <i class="fas fa-comment"></i>
-          </span>
-        </button>
-      </form>
-
-      <% } %> <% for(let comment of story.comments){ %>
-
-      <div class="card my-2">
-        <div class="card-body">
-          <h5 class="starability-result" data-rating="<%=comment.rating %>">
-            Rated: <%=comment.rating %> stars
+  <!-- https://github.com/LunarLogic/starability -->
+  <link rel="stylesheet" href="/stylesheets/stars.css" />
+  <div class="container min-vh-100">
+    <div class="row my-5">
+      <div class="col-lg-6 my-5">
+        <figure class="figure">
+          <h5><b>Title</b> : <%=story.title%>
           </h5>
-          <p class="card-text">
-            <b><%=comment.author.username %></b> <%=comment.comment %>
+          <!-- testing carousel -->
+          <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <% story.images.forEach((image, index)=>{ %>
+                <div class="carousel-item <%=index ===0?'active':''%>">
+                  <img src="<%=image.url %> " class="d-block w-100 carousel__image" alt="..." />
+                </div>
+                <% }) %>
+            </div>
+            <% if(story.images.length> 1){ %>
+
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+              <% } %>
+          </div>
+          <!-- end of -->
+
+          <figcaption class="figure-caption mb-3">
+            <b>Posted By </b>
+            <%=story.author.username%>
+          </figcaption>
+          <h6 class="my-2"><b>Description</b>
+            <%=story.description%>
+          </h6>
+          <p><b>Location</b> : <%=story.location%>
           </p>
-          <% if(currentUser && comment.author.equals(currentUser._id) ||
-          currentUser && currentUser.isAdmin){ %>
-          <form
-            class="d-inline"
-            method="POST"
-            action="/story/<%=story._id%>/comment/<%=comment._id%>?_method=DELETE"
-          >
-            <button class="btn btn-sm btn-danger">Delete</button>
-          </form>
-          <a
-            class="btn btn-sm btn-secondary"
-            href="/story/<%=story._id%>/comment/<%=comment._id%>/edit"
-            >Edit</a
-          >
-          <% } %>
-        </div>
+          <!-- if current user is present and story.author === currentUser._id -->
+          <% if(currentUser && story.author.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+            <div class="buttons d-flex justify-content-between">
+              <div class="__formContent">
+                <form action="/story/<%=story._id%>?_method=DELETE" method="POST" class="d-inline">
+                  <button class="btn btn-danger p-2" type="submit">
+                    <i class="fas fa-trash">Delete</i>
+                  </button>
+                </form>
+                <a href="/story/<%=story._id%>/edit" class="btn btn-secondary p-2"><i class="fas fa-edit">Edit</i></a>
+              </div>
+            </div>
+        </figure>
+        <% } %>
       </div>
-      <% } %>
+      <%if(currentUser){ %>
+        <div class="col-lg-6 my-5">
+          <form action="/story/<%=story._id%>/comment" method="POST" class="validated-form" novalidate>
+            <div class="mt-4 mb-3">
+              <fieldset class="starability-basic">
+                <legend class="lead">Rating:</legend>
+                <input type="radio" id="no-rate" class="input-no-rate" name="comment[rating]" value="0" checked
+                  aria-label="No rating." />
+                <input type="radio" id="second-rate1" name="comment[rating]" value="1" />
+                <label for="second-rate1" title="Terrible">1 star</label>
+                <input type="radio" id="second-rate2" name="comment[rating]" value="2" />
+                <label for="second-rate2" title="Not good">2 stars</label>
+                <input type="radio" id="second-rate3" name="comment[rating]" value="3" />
+                <label for="second-rate3" title="Average">3 stars</label>
+                <input type="radio" id="second-rate4" name="comment[rating]" value="4" />
+                <label for="second-rate4" title="Very good">4 stars</label>
+                <input type="radio" id="second-rate5" name="comment[rating]" value="5" />
+                <label for="second-rate5" title="Amazing">5 stars</label>
+              </fieldset>
+            </div>
+
+            <div class="mt-2">
+              <label for="comment" class="lead"><b>Comment</b> </label>
+              <textarea type="text" name="comment[comment]" class="form-control mt-3" placeholder="Comment" id="comment"
+                required></textarea>
+              <div class="valid-feedback">Looks Good!</div>
+              <div class="invalid-feedback">Please enter the text to continue</div>
+            </div>
+            <button class="btn btn-primary btn-success mt-1 mb-5">
+              Comment
+              <span>
+                <i class="fas fa-comment"></i>
+              </span>
+            </button>
+          </form>
+
+          <% } %>
+            <% for(let comment of story.comments){ %>
+
+              <div class="card my-2">
+                <div class="card-body">
+                  <h5 class="starability-result" data-rating="<%=comment.rating %>">
+                    Rated: <%=comment.rating %> stars
+                  </h5>
+                  <p class="card-text">
+                    <b>
+                      <%=comment.author.username %>
+                    </b>
+                    <%=comment.comment %>
+                  </p>
+                  <% if(currentUser && comment.author.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                    <form class="d-inline" method="POST"
+                      action="/story/<%=story._id%>/comment/<%=comment._id%>?_method=DELETE">
+                      <button class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                    <a class="btn btn-sm btn-secondary"
+                      href="/story/<%=story._id%>/comment/<%=comment._id%>/edit">Edit</a>
+                    <% } %>
+                </div>
+              </div>
+              <% } %>
+        </div>
     </div>
   </div>
-</div>

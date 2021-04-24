@@ -55,7 +55,7 @@ module.exports.login = (req, res) => {
 
 module.exports.logout = async (req, res, next) => {
     req.logout();
-    req.flash("success", "Successfully loged you out!");
+    req.flash("success", "Successfully logged you out!");
     res.redirect("/story");
 };
 

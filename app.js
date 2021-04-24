@@ -39,7 +39,7 @@ const storyRoutes = require("./routes/story");
 const commentRoutes = require("./routes/comment");
 const userRoutes = require("./routes/user");
 
-const dbUrl = process.env.URL || 'mongodb://localhost:27017/story';
+const dbUrl = 'mongodb://localhost:27017/story' || process.env.URL;
 // process.env.URL;
 
 // connecting to the database.
@@ -136,7 +136,7 @@ app.get("/", (req, res) => {
 app.all("*", (req, res, next) => {
     let text = (req.params[0]);
     let pathText = (text.slice(1));
-    return next(new ExpressError(`Page ${pathText} Not Found`, 404));
+    return next(new ExpressError(`Page :  ${pathText} Not Found`, 404));
 });
 
 //error middleware
